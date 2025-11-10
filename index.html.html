@@ -1,0 +1,812 @@
+<!DOCTYPE html>
+<html lang="fr" class="dark">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mohamed, voici mon Code Source pour l'Avenir</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&family=Poppins:wght@600;700;800&family=Playfair+Display:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet">
+
+    <script>
+        tailwind.config = {
+            darkMode: 'class',
+            theme: {
+                extend: {
+                    colors: {
+                        accent: '#ff6b81',
+                        accent2: '#a29bfe',
+                        darkbg: '#0a0e27',
+                    },
+                    fontFamily: {
+                        sans: ['Inter', 'sans-serif'],
+                        heading: ['Poppins', 'sans-serif'],
+                        script: ['Playfair Display', 'serif'],
+                    }
+                }
+            }
+        }
+    </script>
+
+    <style>
+        @keyframes float {
+            0%, 100% { transform: translateY(0px) rotate(0deg); }
+            50% { transform: translateY(-20px) rotate(5deg); }
+        }
+
+        @keyframes gradient-shift {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+        }
+
+        @keyframes shimmer {
+            0% { background-position: -1000px 0; }
+            100% { background-position: 1000px 0; }
+        }
+
+        @keyframes pulse-border {
+            0%, 100% { border-color: rgba(255, 107, 129, 0.3); box-shadow: 0 0 20px rgba(255, 107, 129, 0.2); }
+            50% { border-color: rgba(255, 107, 129, 0.8); box-shadow: 0 0 40px rgba(255, 107, 129, 0.5); }
+        }
+
+        @keyframes slide-up {
+            from { opacity: 0; transform: translateY(50px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        @keyframes scale-in {
+            from { opacity: 0; transform: scale(0.8); }
+            to { opacity: 1; transform: scale(1); }
+        }
+
+        @keyframes rotate-slow {
+            from { transform: rotate(0deg); }
+            to { transform: rotate(360deg); }
+        }
+
+        @keyframes particle-float {
+            0%, 100% { transform: translateY(0) translateX(0); opacity: 0.3; }
+            25% { transform: translateY(-100px) translateX(50px); opacity: 0.7; }
+            50% { transform: translateY(-150px) translateX(-30px); opacity: 1; }
+            75% { transform: translateY(-100px) translateX(80px); opacity: 0.5; }
+        }
+
+        .gradient-bg {
+            background: linear-gradient(-45deg, #0a0e27, #1a1f3a, #2a1f4a, #1a2f4a);
+            background-size: 400% 400%;
+            animation: gradient-shift 15s ease infinite;
+        }
+
+        .light .gradient-bg {
+            background: linear-gradient(-45deg, #ffeef0, #fff0f6, #f0e6ff, #e6f0ff);
+            background-size: 400% 400%;
+            animation: gradient-shift 15s ease infinite;
+        }
+
+        .glass-card {
+            background: rgba(255, 255, 255, 0.03);
+            backdrop-filter: blur(20px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            transition: all 0.3s ease;
+        }
+
+        .glass-card:hover {
+            background: rgba(255, 255, 255, 0.08);
+            border: 1px solid rgba(255, 107, 129, 0.3);
+            transform: translateY(-5px);
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
+        }
+
+        .light .glass-card {
+            background: rgba(255, 255, 255, 0.8);
+            border: 1px solid rgba(0, 0, 0, 0.1);
+        }
+
+        .light .glass-card:hover {
+            background: rgba(255, 255, 255, 0.95);
+            border: 1px solid rgba(255, 107, 129, 0.4);
+        }
+
+        .float-animation {
+            animation: float 6s ease-in-out infinite;
+        }
+
+        .slide-up {
+            animation: slide-up 0.8s ease-out forwards;
+        }
+
+        .scale-in {
+            animation: scale-in 0.6s ease-out forwards;
+        }
+
+        .shimmer {
+            background: linear-gradient(90deg, transparent, rgba(255, 107, 129, 0.3), transparent);
+            background-size: 1000px 100%;
+            animation: shimmer 3s infinite;
+        }
+
+        .text-gradient {
+            background: linear-gradient(135deg, #ff6b81, #a29bfe, #ff6b81);
+            background-size: 200% 200%;
+            -webkit-background-clip: text;
+            background-clip: text;
+            -webkit-text-fill-color: transparent;
+            animation: gradient-shift 8s ease infinite;
+        }
+
+        .particle {
+            position: absolute;
+            width: 4px;
+            height: 4px;
+            background: radial-gradient(circle, #ff6b81, transparent);
+            border-radius: 50%;
+            pointer-events: none;
+        }
+
+        .particle-container {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            overflow: hidden;
+            z-index: 0;
+            pointer-events: none;
+        }
+
+        .rotate-slow {
+            animation: rotate-slow 20s linear infinite;
+        }
+
+        .code-block {
+            position: relative;
+            overflow: hidden;
+        }
+
+        .code-block::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255, 107, 129, 0.1), transparent);
+            animation: shimmer 3s infinite;
+        }
+
+        [contenteditable="true"]:focus {
+            outline: 2px solid #ff6b81;
+            outline-offset: 4px;
+            background: rgba(255, 107, 129, 0.1) !important;
+        }
+
+        .btn-3d {
+            transform-style: preserve-3d;
+            transition: transform 0.3s ease;
+        }
+
+        .btn-3d:hover {
+            transform: translateY(-3px) scale(1.02);
+        }
+
+        .btn-3d:active {
+            transform: translateY(1px) scale(0.98);
+        }
+
+        ::-webkit-scrollbar {
+            width: 10px;
+        }
+
+        ::-webkit-scrollbar-track {
+            background: rgba(255, 255, 255, 0.05);
+        }
+
+        ::-webkit-scrollbar-thumb {
+            background: linear-gradient(180deg, #ff6b81, #a29bfe);
+            border-radius: 10px;
+        }
+
+        ::-webkit-scrollbar-thumb:hover {
+            background: linear-gradient(180deg, #a29bfe, #ff6b81);
+        }
+
+        @media print {
+            .no-print { display: none !important; }
+            .glass-card { background: white; border: 1px solid #ddd; }
+            body { background: white; color: black; }
+        }
+
+        .delay-1 { animation-delay: 0.1s; }
+        .delay-2 { animation-delay: 0.2s; }
+        .delay-3 { animation-delay: 0.3s; }
+        .delay-4 { animation-delay: 0.4s; }
+        .delay-5 { animation-delay: 0.5s; }
+        .delay-6 { animation-delay: 0.6s; }
+    </style>
+</head>
+<body class="min-h-screen gradient-bg text-gray-100 transition-colors duration-500 overflow-x-hidden">
+
+    <!-- Particle Background -->
+    <div class="particle-container no-print" id="particles"></div>
+
+    <!-- Decorative Gradient Orbs -->
+    <div class="no-print fixed top-20 left-10 w-96 h-96 bg-accent rounded-full opacity-10 blur-3xl pointer-events-none animate-pulse"></div>
+    <div class="no-print fixed bottom-20 right-10 w-96 h-96 bg-accent2 rounded-full opacity-10 blur-3xl pointer-events-none animate-pulse" style="animation-delay: 1s;"></div>
+
+    <!-- Header -->
+    <header class="container mx-auto px-4 py-12 md:py-20 relative z-10">
+        <div class="text-center max-w-5xl mx-auto">
+            <div class="inline-flex items-center justify-center mb-8 scale-in">
+                <div class="relative">
+                    <svg class="w-24 h-24 text-accent float-animation" fill="currentColor" viewBox="0 0 20 20">
+                        <path fill-rule="evenodd" d="M3.172 5.172a4 4 0 015.656 0L10 6.343l1.172-1.171a4 4 0 115.656 5.656L10 17.657l-6.828-6.829a4 4 0 010-5.656z" clip-rule="evenodd"></path>
+                    </svg>
+                    <div class="absolute inset-0 w-24 h-24 bg-accent rounded-full opacity-30 blur-xl animate-ping"></div>
+                </div>
+            </div>
+            
+            <h1 class="font-heading text-5xl md:text-7xl font-extrabold mb-6 text-gradient slide-up tracking-tight">
+                Mohamed Mbaye Ndiaye, voici mon Code Source pour l'Avenir
+            </h1>
+            
+            <p class="text-xl md:text-3xl text-gray-300 font-light mb-8 slide-up delay-2">
+                Une déclaration solennelle et unique ✨
+            </p>
+
+            <!-- Animated Stats -->
+            <div class="flex flex-wrap justify-center gap-6 mb-10 slide-up delay-3">
+                <div class="glass-card rounded-2xl px-6 py-4 scale-in delay-1">
+                    <div class="text-3xl font-bold text-accent">99.99%</div>
+                    <div class="text-sm text-gray-400">Uptime garanti</div>
+                </div>
+                <div class="glass-card rounded-2xl px-6 py-4 scale-in delay-2">
+                    <div class="text-3xl font-bold text-accent2">∞</div>
+                    <div class="text-sm text-gray-400">Scalabilité</div>
+                </div>
+                <div class="glass-card rounded-2xl px-6 py-4 scale-in delay-3">
+                    <div class="text-3xl font-bold text-accent">2.0</div>
+                    <div class="text-sm text-gray-400">Version Éternelle</div>
+                </div>
+            </div>
+
+            <!-- Theme Toggle -->
+            <button id="themeToggle" class="no-print px-8 py-4 rounded-full glass-card hover:scale-105 transition-all duration-300 inline-flex items-center gap-3 btn-3d scale-in delay-4">
+                <svg id="sunIcon" class="w-6 h-6 hidden" fill="currentColor" viewBox="0 0 20 20">
+                    <path fill-rule="evenodd" d="M10 2a1 1 0 011 1v1a1 1 0 11-2 0V3a1 1 0 011-1zm4 8a4 4 0 11-8 0 4 4 0 018 0zm-.464 4.95l.707.707a1 1 0 001.414-1.414l-.707-.707a1 1 0 00-1.414 1.414zm2.12-10.607a1 1 0 010 1.414l-.706.707a1 1 0 11-1.414-1.414l.707-.707a1 1 0 011.414 0zM17 11a1 1 0 100-2h-1a1 1 0 100 2h1zm-7 4a1 1 0 011 1v1a1 1 0 11-2 0v-1a1 1 0 011-1zM5.05 6.464A1 1 0 106.465 5.05l-.708-.707a1 1 0 00-1.414 1.414l.707.707zm1.414 8.486l-.707.707a1 1 0 01-1.414-1.414l.707-.707a1 1 0 011.414 1.414zM4 11a1 1 0 100-2H3a1 1 0 000 2h1z" clip-rule="evenodd"></path>
+                </svg>
+                <svg id="moonIcon" class="w-6 h-6" fill="currentColor" viewBox="0 0 20 20">
+                    <path d="M17.293 13.293A8 8 0 016.707 2.707a8.001 8.001 0 1010.586 10.586z"></path>
+                </svg>
+                <span id="themeText" class="font-semibold">Mode clair</span>
+            </button>
+        </div>
+    </header>
+
+    <!-- Main Content -->
+    <main class="container mx-auto px-4 py-8 relative z-10">
+        <div class="grid grid-cols-1 lg:grid-cols-3 gap-8 max-w-7xl mx-auto" id="mainContent">
+
+            <!-- Left Content -->
+            <div class="lg:col-span-2 space-y-8">
+
+                <!-- Section 1 -->
+                <section class="glass-card rounded-3xl p-8 md:p-10 slide-up delay-1 group">
+                    <div class="flex items-center gap-4 mb-6">
+                        <div class="w-12 h-12 rounded-2xl bg-gradient-to-br from-accent to-accent2 flex items-center justify-center rotate-slow">
+                            <span class="text-2xl">💖</span>
+                        </div>
+                        <h2 class="font-heading text-3xl md:text-4xl font-bold text-white">
+                            La Déclaration Solennelle
+                        </h2>
+                    </div>
+                    
+                    <div class="prose prose-lg max-w-none space-y-5 text-gray-200 leading-relaxed">
+                        <p class="text-lg md:text-xl font-semibold text-accent2">
+                            Mohamed Mbaye Ndiaye,
+                        </p>
+                        <p class="text-base md:text-lg">
+                            Je t'écris aujourd'hui non pas pour te séduire par des mots, mais pour te livrer une vérité brute, aussi claire qu'une ligne de code bien écrite : <strong class="text-accent">tu es devenu mon algorithme de bonheur</strong>.
+                        </p>
+                        <p class="text-base md:text-lg">
+                            Chaque jour passé avec toi, chaque sourire que tu m'offres, chaque moment où tu te révèles à moi — tout cela forme la base de données de ma vie, celle que je veux construire, enrichir, protéger. Et je ne parle pas d'un simple stockage temporaire, non. Je parle d'un <strong class="text-accent">engagement durable, d'une architecture robuste</strong>, d'un système conçu pour résister au temps, aux bugs de la vie, aux erreurs 404 de l'existence.
+                        </p>
+                        <p class="text-base md:text-lg">
+                            Tu es le <code class="bg-gray-800 px-3 py-1 rounded-lg text-accent font-semibold">commit</code> que je n'ai jamais voulu annuler. Tu es la <code class="bg-gray-800 px-3 py-1 rounded-lg text-accent font-semibold">pull request</code> que j'ai acceptée sans hésitation. Tu es la <code class="bg-gray-800 px-3 py-1 rounded-lg text-accent font-semibold">main branch</code> de mon projet de vie.
+                        </p>
+                        <div class="bg-gradient-to-r from-accent/10 to-accent2/10 rounded-2xl p-6 my-6 border-l-4 border-accent">
+                            <p class="text-base md:text-lg font-semibold mb-3 text-white">Alors aujourd'hui, je te fais cette promesse solennelle :</p>
+                            <ul class="space-y-3 ml-0">
+                                <li class="flex items-start gap-3">
+                                    <span class="text-accent text-xl">🛠️</span>
+                                    <span>Je serai ton <strong class="text-white">compagnon de debug</strong>, celui qui te soutiendra quand les choses plantent.</span>
+                                </li>
+                                <li class="flex items-start gap-3">
+                                    <span class="text-accent text-xl">🚀</span>
+                                    <span>Je serai ton <strong class="text-white">partenaire de déploiement</strong>, celui qui te propulsera vers tes plus beaux projets.</span>
+                                </li>
+                                <li class="flex items-start gap-3">
+                                    <span class="text-accent text-xl">🤝</span>
+                                    <span>Je serai ton <strong class="text-white">collaborateur de confiance</strong>, celui qui ne te jugera jamais sur tes erreurs de syntaxe.</span>
+                                </li>
+                                <li class="flex items-start gap-3">
+                                    <span class="text-accent text-xl">💾</span>
+                                    <span>Je serai ton <strong class="text-white">gardien de sauvegarde</strong>, celui qui préservera tes rêves, tes ambitions, ta lumière.</span>
+                                </li>
+                            </ul>
+                        </div>
+                        <p class="text-base md:text-lg text-white font-semibold">
+                            Je veux construire avec toi non pas un simple site web, mais <strong class="text-accent">un écosystème entier</strong> — un monde où chaque fonctionnalité est pensée pour ton bien-être, où chaque mise à jour te rend plus heureux, où chaque version de nous est meilleure que la précédente.
+                        </p>
+                    </div>
+                </section>
+
+                <!-- Section 2 -->
+                <section class="glass-card rounded-3xl p-8 md:p-10 slide-up delay-2">
+                    <div class="flex items-center gap-4 mb-6">
+                        <div class="w-12 h-12 rounded-2xl bg-gradient-to-br from-accent2 to-accent flex items-center justify-center">
+                            <span class="text-2xl">💻</span>
+                        </div>
+                        <h2 class="font-heading text-3xl md:text-4xl font-bold text-white">
+                            Le Code d'Amour
+                        </h2>
+                    </div>
+                    
+                    <div class="prose prose-lg max-w-none space-y-5 text-gray-200">
+                        <p class="text-base md:text-lg">
+                            Si notre relation était un logiciel, voici ce que je garantirais :
+                        </p>
+                        <div class="code-block bg-gradient-to-br from-gray-900 to-gray-800 rounded-2xl p-8 my-6 font-mono text-sm md:text-base overflow-x-auto border border-accent/20 shadow-2xl">
+<pre class="text-green-400">
+<span class="text-blue-400">function</span> <span class="text-yellow-400">relationshipWithMohamed</span>() {
+    <span class="text-purple-400">return</span> {
+        <span class="text-cyan-400">uptime</span>: <span class="text-orange-400">"99.99%"</span>,
+        <span class="text-cyan-400">bugs</span>: <span class="text-orange-400">"Nous les résoudrons ensemble"</span>,
+        <span class="text-cyan-400">supportLevel</span>: <span class="text-orange-400">"Priorité maximale"</span>,
+        <span class="text-cyan-400">scalability</span>: <span class="text-orange-400">"Infinie"</span>,
+        <span class="text-cyan-400">securityProtocol</span>: <span class="text-orange-400">"Amour authentique SSL"</span>,
+        <span class="text-cyan-400">backupStrategy</span>: <span class="text-orange-400">"Sauvegarde quotidienne de ton sourire"</span>,
+        <span class="text-cyan-400">version</span>: <span class="text-orange-400">"2.0 - Édition Éternelle"</span>,
+        <span class="text-cyan-400">commitment</span>: <span class="text-orange-400">"Lifetime warranty"</span>
+    };
+}
+</pre>
+                        </div>
+                        <div class="bg-gradient-to-r from-accent2/20 to-transparent rounded-2xl p-6 border-l-4 border-accent2">
+                            <p class="text-base md:text-lg italic text-white">
+                                « Parce que l'amour, comme le bon code, doit être <strong class="text-accent2">lisible, maintenable, et surtout : fait pour durer</strong>. »
+                            </p>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- Section 3 -->
+                <section class="glass-card rounded-3xl p-8 md:p-10 slide-up delay-3">
+                    <div class="flex items-center gap-4 mb-6">
+                        <div class="w-12 h-12 rounded-2xl bg-gradient-to-br from-accent to-pink-500 flex items-center justify-center">
+                            <span class="text-2xl">♾️</span>
+                        </div>
+                        <h2 class="font-heading text-3xl md:text-4xl font-bold text-white">
+                            La Conviction Éternelle
+                        </h2>
+                    </div>
+                    
+                    <div class="prose prose-lg max-w-none space-y-5 text-gray-200">
+                        <p class="text-base md:text-lg">
+                            Mohamed, je ne te demande pas de répondre maintenant. Je ne te demande pas de comprendre toute la profondeur de ce que je ressens. Ce que je te demande, c'est simplement de <strong class="text-accent">garder ce message</strong>, comme on garde un fichier important, un trésor numérique, une archive précieuse.
+                        </p>
+                        <p class="text-base md:text-lg">
+                            Peut-être qu'un jour, quand tu reliras ces lignes, tu souriras. Peut-être que tu te diras : <em class="text-accent2">"Il était sérieux, finalement."</em>
+                        </p>
+                        <p class="text-base md:text-lg">
+                            Et ce jour-là, si tu le souhaites, nous pourrons démarrer ensemble le plus beau des projets : <strong class="text-accent">une vie à deux, en production</strong>.
+                        </p>
+                        <div class="bg-gradient-to-r from-accent/10 via-accent2/10 to-accent/10 rounded-2xl p-8 my-8 text-center border border-accent/30">
+                            <p class="text-base md:text-lg mb-4">
+                                En attendant, sache que je suis là. Pas en mode veille. Pas en standby. Mais <strong class="text-white">actif, disponible, et totalement dévoué</strong>.
+                            </p>
+                        </div>
+                        <p class="text-2xl md:text-3xl font-bold text-gradient mt-8">
+                            Avec toute ma tendresse, mon respect, et mon code le plus sincère,
+                        </p>
+                        <p class="text-xl md:text-2xl mt-4 text-white font-semibold">
+                            SAS 💻❤️
+                        </p>
+                        <p class="text-sm md:text-base text-gray-400 mt-2">
+                            Version 2.0 — Édition Éternelle
+                        </p>
+                    </div>
+                </section>
+
+            </div>
+
+            <!-- Sidebar -->
+            <aside class="lg:col-span-1 space-y-6">
+
+                <!-- Custom Quote -->
+                <div class="glass-card rounded-3xl p-6 slide-up delay-4 sticky top-4">
+                    <div class="flex items-center gap-3 mb-4">
+                        <span class="text-3xl">💭</span>
+                        <h3 class="font-heading text-xl font-bold text-white">
+                            Ta Citation Personnelle
+                        </h3>
+                    </div>
+                    <div class="mb-4">
+                        <div
+                            id="customQuote"
+                            contenteditable="true"
+                            class="font-script text-2xl md:text-3xl text-center p-6 rounded-2xl bg-gradient-to-br from-white/5 to-white/10 min-h-[120px] focus:from-accent/10 focus:to-accent2/10 transition-all duration-300 text-white border border-white/10"
+                        >
+                            "Le véritable amour, c'est quand le code du cœur fonctionne sans bug."
+                        </div>
+                    </div>
+                    <button
+                        id="applyQuote"
+                        class="w-full px-6 py-3 bg-gradient-to-r from-accent to-pink-500 hover:from-pink-500 hover:to-accent rounded-xl transition-all duration-300 font-semibold text-white btn-3d shadow-lg"
+                    >
+                        ✓ Appliquer la citation
+                    </button>
+                </div>
+
+                <!-- Actions -->
+                <div class="glass-card rounded-3xl p-6 slide-up delay-5 no-print">
+                    <div class="flex items-center gap-3 mb-4">
+                        <span class="text-3xl">🎯</span>
+                        <h3 class="font-heading text-xl font-bold text-white">
+                            Actions Rapides
+                        </h3>
+                    </div>
+                    <div class="space-y-3">
+                        <button
+                            id="copyBtn"
+                            class="w-full px-5 py-3 bg-white/10 hover:bg-white/20 rounded-xl transition-all duration-300 font-medium flex items-center justify-center gap-3 btn-3d text-white border border-white/10"
+                        >
+                            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 16H6a2 2 0 01-2-2V6a2 2 0 012-2h8a2 2 0 012 2v2m-6 12h8a2 2 0 002-2v-8a2 2 0 00-2-2h-8a2 2 0 00-2 2v8a2 2 0 002 2z"></path>
+                            </svg>
+                            Copier le texte
+                        </button>
+
+                        <button
+                            id="downloadHTML"
+                            class="w-full px-5 py-3 bg-white/10 hover:bg-white/20 rounded-xl transition-all duration-300 font-medium flex items-center justify-center gap-3 btn-3d text-white border border-white/10"
+                        >
+                            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 10v6m0 0l-3-3m3 3l3-3m2 8H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"></path>
+                            </svg>
+                            Télécharger HTML
+                        </button>
+
+                        <button
+                            id="downloadPDF"
+                            class="w-full px-5 py-3 bg-gradient-to-r from-accent to-pink-500 hover:from-pink-500 hover:to-accent rounded-xl transition-all duration-300 font-semibold flex items-center justify-center gap-3 btn-3d text-white shadow-lg"
+                        >
+                            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 21h10a2 2 0 002-2V9.414a1 1 0 00-.293-.707l-5.414-5.414A1 1 0 0012.586 3H7a2 2 0 00-2 2v14a2 2 0 002 2z"></path>
+                            </svg>
+                            Télécharger PDF
+                        </button>
+
+                        <button
+                            id="printBtn"
+                            class="w-full px-5 py-3 bg-white/10 hover:bg-white/20 rounded-xl transition-all duration-300 font-medium flex items-center justify-center gap-3 btn-3d text-white border border-white/10"
+                        >
+                            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 17h2a2 2 0 002-2v-4a2 2 0 00-2-2H5a2 2 0 00-2 2v4a2 2 0 002 2h2m2 4h6a2 2 0 002-2v-4a2 2 0 00-2-2H9a2 2 0 00-2 2v4a2 2 0 002 2zm8-12V5a2 2 0 00-2-2H9a2 2 0 00-2 2v4h10z"></path>
+                            </svg>
+                            Imprimer
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Info Card -->
+                <div class="glass-card rounded-3xl p-6 slide-up delay-6">
+                    <div class="flex items-center gap-3 mb-3">
+                        <span class="text-2xl">ℹ️</span>
+                        <h3 class="font-heading text-lg font-bold text-white">
+                            À propos
+                        </h3>
+                    </div>
+                    <p class="text-sm text-gray-300 leading-relaxed">
+                        Cette page est conçue pour être personnalisée, sauvegardée et partagée. Modifie la citation, télécharge en PDF ou HTML, et conserve ce message pour toujours.
+                    </p>
+                </div>
+
+                <!-- Stats Card -->
+                <div class="glass-card rounded-3xl p-6 slide-up delay-6 bg-gradient-to-br from-accent/10 to-accent2/10">
+                    <div class="flex items-center gap-3 mb-4">
+                        <span class="text-2xl">📊</span>
+                        <h3 class="font-heading text-lg font-bold text-white">
+                            Statistiques
+                        </h3>
+                    </div>
+                    <div class="space-y-3">
+                        <div class="flex justify-between items-center">
+                            <span class="text-sm text-gray-300">Mots d'amour</span>
+                            <span class="text-accent font-bold">842</span>
+                        </div>
+                        <div class="flex justify-between items-center">
+                            <span class="text-sm text-gray-300">Lignes de code</span>
+                            <span class="text-accent2 font-bold">127</span>
+                        </div>
+                        <div class="flex justify-between items-center">
+                            <span class="text-sm text-gray-300">Niveau d'engagement</span>
+                            <span class="text-accent font-bold">100%</span>
+                        </div>
+                    </div>
+                </div>
+
+            </aside>
+
+        </div>
+    </main>
+
+    <!-- Footer -->
+    <footer class="container mx-auto px-4 py-12 mt-16 text-center no-print relative z-10">
+        <div class="glass-card rounded-3xl p-8 max-w-2xl mx-auto">
+            <p class="text-gray-300 mb-2 text-lg">
+                Fait avec ❤️ et du code soigné
+            </p>
+            <p class="text-accent font-semibold text-xl">
+                Version 2.0 — Édition Éternelle
+            </p>
+            <div class="flex justify-center gap-4 mt-6">
+                <div class="w-2 h-2 rounded-full bg-accent animate-pulse"></div>
+                <div class="w-2 h-2 rounded-full bg-accent2 animate-pulse" style="animation-delay: 0.2s;"></div>
+                <div class="w-2 h-2 rounded-full bg-accent animate-pulse" style="animation-delay: 0.4s;"></div>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Toast Notification -->
+    <div id="toast" class="fixed bottom-6 right-6 px-8 py-4 rounded-2xl glass-card text-white transform translate-y-32 opacity-0 transition-all duration-300 z-50 no-print shadow-2xl border border-accent/30">
+        <p id="toastMessage" class="font-semibold"></p>
+    </div>
+
+    <!-- Modal -->
+    <div id="confirmModal" class="fixed inset-0 bg-black/70 backdrop-blur-sm flex items-center justify-center z-50 opacity-0 pointer-events-none transition-opacity duration-300 no-print">
+        <div class="glass-card rounded-3xl p-8 max-w-md w-full mx-4 transform scale-95 transition-transform duration-300 border border-accent/30" id="modalContent">
+            <h3 class="font-heading text-2xl font-bold mb-4 text-accent" id="modalTitle">Confirmation</h3>
+            <p class="text-gray-200 mb-6 text-lg" id="modalMessage"></p>
+            <div class="flex justify-end gap-3">
+                <button id="modalCancel" class="px-6 py-3 text-gray-300 hover:bg-white/10 rounded-xl transition-all duration-300 font-medium btn-3d">
+                    Annuler
+                </button>
+                <button id="modalConfirm" class="px-6 py-3 bg-gradient-to-r from-accent to-pink-500 hover:from-pink-500 hover:to-accent rounded-xl transition-all duration-300 text-white font-semibold btn-3d">
+                    Confirmer
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Create floating particles
+        function createParticles() {
+            const container = document.getElementById('particles');
+            const particleCount = 50;
+            
+            for (let i = 0; i < particleCount; i++) {
+                const particle = document.createElement('div');
+                particle.className = 'particle';
+                particle.style.left = Math.random() * 100 + '%';
+                particle.style.top = Math.random() * 100 + '%';
+                particle.style.animationDuration = (Math.random() * 10 + 5) + 's';
+                particle.style.animationDelay = Math.random() * 5 + 's';
+                particle.style.animation = `particle-float ${Math.random() * 10 + 5}s ease-in-out infinite`;
+                container.appendChild(particle);
+            }
+        }
+
+        createParticles();
+
+        // Theme toggle
+        const html = document.documentElement;
+        const themeToggle = document.getElementById('themeToggle');
+        const themeText = document.getElementById('themeText');
+        const sunIcon = document.getElementById('sunIcon');
+        const moonIcon = document.getElementById('moonIcon');
+
+        function updateThemeUI(isDark) {
+            if (isDark) {
+                themeText.textContent = 'Mode clair';
+                moonIcon.classList.remove('hidden');
+                sunIcon.classList.add('hidden');
+            } else {
+                themeText.textContent = 'Mode sombre';
+                sunIcon.classList.remove('hidden');
+                moonIcon.classList.add('hidden');
+            }
+        }
+
+        themeToggle.addEventListener('click', () => {
+            html.classList.toggle('dark');
+            const isDark = html.classList.contains('dark');
+            updateThemeUI(isDark);
+        });
+
+        // Initialize theme
+        if (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches) {
+            html.classList.add('dark');
+            updateThemeUI(true);
+        } else {
+            html.classList.remove('dark');
+            updateThemeUI(false);
+        }
+
+        // Toast notification
+        function showToast(message, duration = 3000) {
+            const toast = document.getElementById('toast');
+            const toastMessage = document.getElementById('toastMessage');
+            toastMessage.textContent = message;
+            toast.classList.remove('translate-y-32', 'opacity-0');
+            toast.classList.add('translate-y-0', 'opacity-100');
+
+            setTimeout(() => {
+                toast.classList.add('translate-y-32', 'opacity-0');
+                toast.classList.remove('translate-y-0', 'opacity-100');
+            }, duration);
+        }
+
+        // Modal
+        function showConfirmModal(title, message) {
+            return new Promise((resolve) => {
+                const modal = document.getElementById('confirmModal');
+                const modalContent = document.getElementById('modalContent');
+                const modalTitle = document.getElementById('modalTitle');
+                const modalMessage = document.getElementById('modalMessage');
+                const modalConfirm = document.getElementById('modalConfirm');
+                const modalCancel = document.getElementById('modalCancel');
+
+                modalTitle.textContent = title;
+                modalMessage.textContent = message;
+
+                modal.classList.remove('opacity-0', 'pointer-events-none');
+                modalContent.classList.remove('scale-95');
+                modalContent.classList.add('scale-100');
+
+                const closeModal = (confirmed) => {
+                    modal.classList.add('opacity-0', 'pointer-events-none');
+                    modalContent.classList.add('scale-95');
+                    modalContent.classList.remove('scale-100');
+                    resolve(confirmed);
+                };
+
+                modalConfirm.onclick = () => closeModal(true);
+                modalCancel.onclick = () => closeModal(false);
+                modal.onclick = (e) => {
+                    if (e.target === modal) closeModal(false);
+                };
+            });
+        }
+
+        // Apply quote
+        document.getElementById('applyQuote').addEventListener('click', () => {
+            const quote = document.getElementById('customQuote').textContent.trim();
+            if (quote) {
+                showToast('✨ Citation appliquée avec succès !');
+            } else {
+                showToast('⚠️ Veuillez entrer une citation', 3000);
+            }
+        });
+
+        // Copy text
+        document.getElementById('copyBtn').addEventListener('click', async () => {
+            const sections = document.querySelectorAll('section .prose');
+            let text = 'MOHAMED, VOICI MON CODE SOURCE POUR L\'AVENIR\n\n';
+
+            sections.forEach((section, index) => {
+                const heading = section.closest('section').querySelector('h2');
+                if (heading) {
+                    text += heading.textContent + '\n\n';
+                }
+                text += section.textContent.trim() + '\n\n';
+            });
+
+            const quote = document.getElementById('customQuote').textContent.trim();
+            if (quote) {
+                text += '\n\nCITATION PERSONNELLE:\n' + quote + '\n';
+            }
+
+            try {
+                await navigator.clipboard.writeText(text);
+                showToast('✅ Texte copié dans le presse-papier !');
+            } catch (err) {
+                showToast('❌ Erreur lors de la copie');
+            }
+        });
+
+        // Download HTML
+        document.getElementById('downloadHTML').addEventListener('click', async () => {
+            const confirmed = await showConfirmModal(
+                'Télécharger HTML',
+                'Voulez-vous télécharger cette page en HTML ?'
+            );
+
+            if (!confirmed) return;
+
+            const htmlContent = document.documentElement.outerHTML;
+            const blob = new Blob([htmlContent], { type: 'text/html' });
+            const url = URL.createObjectURL(blob);
+            const a = document.createElement('a');
+            a.href = url;
+            a.download = 'declaration-amour-mohamed.html';
+            document.body.appendChild(a);
+            a.click();
+            document.body.removeChild(a);
+            URL.revokeObjectURL(url);
+            showToast('✅ Page HTML téléchargée !');
+        });
+
+        // Download PDF
+        document.getElementById('downloadPDF').addEventListener('click', async () => {
+            const confirmed = await showConfirmModal(
+                'Générer PDF',
+                'Voulez-vous générer et télécharger un PDF de cette page ? (Cela peut prendre quelques secondes)'
+            );
+
+            if (!confirmed) return;
+
+            showToast('⏳ Génération du PDF en cours...');
+
+            const element = document.getElementById('mainContent');
+            const opt = {
+                margin: 10,
+                filename: 'declaration-amour-mohamed.pdf',
+                image: { type: 'jpeg', quality: 0.98 },
+                html2canvas: { scale: 2, useCORS: true },
+                jsPDF: { unit: 'mm', format: 'a4', orientation: 'portrait' }
+            };
+
+            try {
+                await html2pdf().set(opt).from(element).save();
+                showToast('✅ PDF téléchargé avec succès !');
+            } catch (err) {
+                showToast('❌ Erreur lors de la génération du PDF');
+            }
+        });
+
+        // Print
+        document.getElementById('printBtn').addEventListener('click', () => {
+            window.print();
+        });
+
+        // Scroll animations
+        const observerOptions = {
+            threshold: 0.1,
+            rootMargin: '0px 0px -50px 0px'
+        };
+
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.style.opacity = '1';
+                    entry.target.style.transform = 'translateY(0)';
+                }
+            });
+        }, observerOptions);
+
+        document.querySelectorAll('.slide-up, .scale-in').forEach(el => {
+            el.style.opacity = '0';
+            el.style.transform = 'translateY(30px)';
+            observer.observe(el);
+        });
+
+        // Interactive cursor effect
+        document.addEventListener('mousemove', (e) => {
+            const cards = document.querySelectorAll('.glass-card');
+            cards.forEach(card => {
+                const rect = card.getBoundingClientRect();
+                const x = e.clientX - rect.left;
+                const y = e.clientY - rect.top;
+
+                if (x >= 0 && x <= rect.width && y >= 0 && y <= rect.height) {
+                    card.style.setProperty('--mouse-x', x + 'px');
+                    card.style.setProperty('--mouse-y', y + 'px');
+                }
+            });
+        });
+    </script>
+</body>
+</html>
